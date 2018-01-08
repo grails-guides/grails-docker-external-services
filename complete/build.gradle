@@ -149,7 +149,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 }
 //end::createPostgresContainer[]
 
-//start::startPostgresContainer[]
+//tag::startPostgresContainer[]
 task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
     group = 'docker'
     description = 'Starts Postgres container'
@@ -165,10 +165,9 @@ task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgre
         logger.info "Postgres is listening on port ${createPostgresContainer.dbPort}"
     }
 }
-bootRun.dependsOn startPostgresContainer
 //end::startPostgresContainer[]
 
-//end::stopPostgresContainer[]
+//tag::stopPostgresContainer[]
 task stopPostgresContainer(type: DockerStopContainer) {
     group = 'docker'
     description = 'Stops Postgres container'

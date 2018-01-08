@@ -3,9 +3,13 @@ training:
 gettingStarted: 
   title: Getting Started
   howto: How to complete the guide
-gradle:
-  title: Gradle Docker plugin
-postgresql:
-  title: Configure PostgreSQL
+writing:
+  title: Writing the Guide
+  domainClass: Domain Class
+  gradle: Gradle Docker plugin
+  gradleDockerTasks: Gradle Docker Tasks
+  postgresql: Configure PostgreSQL
+running:
+  title: Running the app
 helpWithGrails:
   title: Help with Grails  

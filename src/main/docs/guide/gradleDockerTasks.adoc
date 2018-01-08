@@ -1,0 +1,14 @@
+We configure several Gradle tasks which allow us to create/start/stop a PostgreSQL container with Gradle
+
+[source, groovy]
+.build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=import]
+...
+..
+.
+include::{sourceDir}/build.gradle[indent=0, tag=pullPostgresImage]
+include::{sourceDir}/build.gradle[indent=0, tag=createPostgresContainer]
+include::{sourceDir}/build.gradle[indent=0, tag=startPostgresContainer]
+include::{sourceDir}/build.gradle[indent=0, tag=stopPostgresContainer]
+----
