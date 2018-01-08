@@ -36,14 +36,6 @@ apply plugin:"org.grails.grails-gsp"
 apply plugin: 'com.bmuschko.docker-remote-api' // <1>
 //end::apply[]
 
-//tag::ext[]
-ext {
-    pgContainerName = "${System.getProperty('grails.env') ?: 'dev'}-demo-postgres"
-    dbName = "${System.getProperty('grails.env') ?: 'dev'}DemoDb"
-    dbPort = "${System.getProperty('grails.env')}" == 'test' ? 5433 : 5432
-}
-//end::ext[]
-
 //tag::repositories[]
 repositories {
     mavenLocal()
@@ -131,13 +123,19 @@ task pullPostgresImage(type: DockerPullImage) {
 
 //tag::createPostgresContainer[]
 task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgresImage) {
+    ext {
+        pgContainerName = "demo-postgres"
+        dbName = "demoDb"
+        dbPort = 5432
+        dbPassword = 'dbPassword'
+    }
     group = 'docker'
     description = 'Creates PostgreSQL container'
     containerName = pgContainerName
     imageId = 'postgres:9.6.6'
     portBindings = ["${dbPort}:5432"]
     env = [
-        'POSTGRES_PASSWORD=dbPassword',
+        "POSTGRES_PASSWORD=${dbPassword}",
         "POSTGRES_DB=${dbName}",
     ] as String[]
 
@@ -155,7 +153,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
     group = 'docker'
     description = 'Starts Postgres container'
-    containerId = pgContainerName
+    containerId = createPostgresContainer.pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
             logger.warn 'Container already started'
@@ -174,7 +172,7 @@ bootRun.dependsOn startPostgresContainer
 task stopPostgresContainer(type: DockerStopContainer) {
     group = 'docker'
     description = 'Stops Postgres container'
-    containerId = pgContainerName
+    containerId = createPostgresContainer.pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
             logger.warn 'Container already stopped'
