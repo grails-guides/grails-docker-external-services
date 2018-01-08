@@ -101,12 +101,14 @@ ext {
 
 // Docker Postgres
 task pullPostgresImage(type: DockerPullImage) {
+    group = 'docker'
     description = 'Pull PostgreSQL image'
     repository = 'postgres'
     tag = '9.6.6'
 }
 
 task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgresImage) {
+    group = 'docker'
     description = 'Creates PostgreSQL container'
     containerName = pgContainerName
     imageId = 'postgres:9.6.6'
