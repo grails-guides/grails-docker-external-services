@@ -1,4 +1,4 @@
-If you do any real Grails Development, you will need to connect to external services; Databases, services such as Elastic search, etc.
+If you do any real Grails Development, you will need to connect to external services; Databases, services such as ElasticSearch, Redis etc.
 
 Usually, you needed to install those services on your development machine to replicate production environments. You could
 be in scenarios such as developing on MacOS a Grails application which connects to MSSQL database. Installing such external services could be difficult

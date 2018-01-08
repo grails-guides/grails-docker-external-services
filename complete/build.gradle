@@ -114,25 +114,29 @@ assets {
 
 //tag::pullPostgresImage[]
 task pullPostgresImage(type: DockerPullImage) {
-    group = 'docker'
+    group = 'docker' // <1>
+    ext {
+        imageName = 'postgres' // <2>
+        imageTag = '9.66'  // <3>
+    }
     description = 'Pull PostgreSQL image'
-    repository = 'postgres'
-    tag = '9.6.6'
+    repository = imageName
+    tag = imageTag
 }
 //end::pullPostgresImage[]
 
 //tag::createPostgresContainer[]
 task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgresImage) {
+    group = 'docker'  // <1>
     ext {
-        pgContainerName = "demo-postgres"
-        dbName = "demoDb"
-        dbPort = 5432
-        dbPassword = 'dbPassword'
+        pgContainerName = "demo-postgres" // <4>
+        dbName = "demoDb" // <5>
+        dbPort = 5432 // <6>
+        dbPassword = 'dbPassword'  // <7>
     }
-    group = 'docker'
     description = 'Creates PostgreSQL container'
     containerName = pgContainerName
-    imageId = 'postgres:9.6.6'
+    imageId = "${pullPostgresImage.name}:${pullPostgresImage.tag}"
     portBindings = ["${dbPort}:5432"]
     env = [
         "POSTGRES_PASSWORD=${dbPassword}",
@@ -141,7 +145,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 
     onError { e ->
         if (e.class.simpleName in ['BadRequestException', 'ConflictException']) {
-            logger.warn 'Container already exists'
+            logger.warn 'Container already exists' // <8>
         } else {
             throw e
         }
@@ -151,12 +155,12 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 
 //tag::startPostgresContainer[]
 task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
-    group = 'docker'
+    group = 'docker' // <1>
     description = 'Starts Postgres container'
     containerId = createPostgresContainer.pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
-            logger.warn 'Container already started'
+            logger.warn 'Container already started'  // <8>
         } else {
             throw e
         }
@@ -169,12 +173,12 @@ task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgre
 
 //tag::stopPostgresContainer[]
 task stopPostgresContainer(type: DockerStopContainer) {
-    group = 'docker'
+    group = 'docker' // <1>
     description = 'Stops Postgres container'
     containerId = createPostgresContainer.pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
-            logger.warn 'Container already stopped'
+            logger.warn 'Container already stopped' // <8>
         } else {
             throw e
         }
