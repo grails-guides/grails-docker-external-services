@@ -128,6 +128,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 }
 
 task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
+    group = 'docker'
     description = 'Starts Postgres container'
     containerId = pgContainerName
     onError { e ->
@@ -143,6 +144,7 @@ task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgre
 }
 
 task stopPostgresContainer(type: DockerStopContainer) {
+    group = 'docker'
     description = 'Stops Postgres container'
     containerId = pgContainerName
     onError { e ->
