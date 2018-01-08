@@ -33,7 +33,7 @@ apply plugin:"com.energizedwork.webdriver-binaries"
 apply plugin:"com.energizedwork.idea-project-components"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
-apply plugin: 'com.bmuschko.docker-remote-api' // <1>
+apply plugin:"com.bmuschko.docker-remote-api" // <1>
 //end::apply[]
 
 //tag::repositories[]

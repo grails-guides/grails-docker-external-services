@@ -1,5 +1,5 @@
-Create a Domain Class. It will help you verify that the database schema is created in the PostgreSQL database running at
-the docker container.
+Create a Domain Class. It will help you verify that the database schema is created in the PostgreSQL database running
+inside the docker container.
 
 [source, groovy]
 .grails-app/domain/demo/Book.groovy

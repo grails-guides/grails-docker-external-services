@@ -21,3 +21,4 @@ include::{sourceDir}/build.gradle[indent=0, tag=stopPostgresContainer]
 <6> Database port
 <7> Database user's password. By default, username is `postgres`
 <8> Don't fail if the container is already created, started or stopped and the Gradle task is invoked
+

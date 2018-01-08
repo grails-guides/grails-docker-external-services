@@ -101,9 +101,9 @@ environments:
             dialect: org.hibernate.dialect.PostgreSQLDialect
             driverClassName: org.postgresql.Driver
             username: postgres
-            password: dbPassword
+            password: dev_password
             dbCreate: update
-            url: jdbc:postgresql://localhost:5432/demoDb
+            url: jdbc:postgresql://localhost:5432/demo_db
         #end::devDataSource[]
     test:
         dataSource:
