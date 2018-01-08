@@ -3,5 +3,7 @@ training:
 gettingStarted: 
   title: Getting Started
   howto: How to complete the guide
+gradle:
+  title: Gradle Docker plugin
 helpWithGrails:
   title: Help with Grails  
