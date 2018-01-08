@@ -5,6 +5,7 @@ gettingStarted:
   howto: How to complete the guide
 writing:
   title: Writing the Guide
+  docker: Install and configure Docker
   domainClass: Domain Class
   gradle: Gradle Docker plugin
   gradleDockerTasks: Gradle Docker Tasks
