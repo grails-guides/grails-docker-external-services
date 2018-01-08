@@ -5,5 +5,7 @@ gettingStarted:
   howto: How to complete the guide
 gradle:
   title: Gradle Docker plugin
+postgresql:
+  title: Configure PostgreSQL
 helpWithGrails:
   title: Help with Grails  

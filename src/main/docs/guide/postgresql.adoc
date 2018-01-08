@@ -1,0 +1,11 @@
+[source, groovy]
+.build.gradle
+----
+include::{sourceDir}/build.gradle[indent=0, tag=postgresql]
+----
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+include::{sourceDir}/grails-app/conf/application.yml[indent=0, tag=devDataSource]
+----

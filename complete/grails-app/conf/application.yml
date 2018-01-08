@@ -94,17 +94,21 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.postgresql.Driver
-    username: postgres
-    password: dbPassword
-
 environments:
     development:
+        #tag::devDataSource[]
         dataSource:
+            driverClassName: org.postgresql.Driver
+            username: postgres
+            password: dbPassword
             dbCreate: update
             url: jdbc:postgresql://localhost:5432/devDemoDb
+        #end::devDataSource[]
     test:
         dataSource:
+            driverClassName: org.postgresql.Driver
+            username: postgres
+            password: dbPassword
             dbCreate: update
             url: jdbc:postgresql://localhost:5433/testDemoDb
     production:
