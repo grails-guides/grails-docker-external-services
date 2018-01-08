@@ -142,7 +142,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
     ] as String[]
 
     onError { e ->
-        if (e.class.simpleName == 'ConflictException') {
+        if (e.class.simpleName in ['BadRequestException', 'ConflictException']) {
             logger.lifecycle 'Container already exists'
         } else {
             throw e
