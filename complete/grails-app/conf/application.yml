@@ -103,7 +103,7 @@ environments:
             username: postgres
             password: dbPassword
             dbCreate: update
-            url: jdbc:postgresql://localhost:5432/devDemoDb
+            url: jdbc:postgresql://localhost:5432/demoDb
         #end::devDataSource[]
     test:
         dataSource:
