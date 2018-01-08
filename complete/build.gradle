@@ -1,3 +1,8 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
+import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
+
 buildscript {
     repositories {
         mavenLocal()
@@ -9,6 +14,7 @@ buildscript {
         classpath "gradle.plugin.com.energizedwork:idea-gradle-plugins:1.4"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.6"
+        classpath "com.bmuschko:gradle-docker-plugin:3.0.11"
     }
 }
 
@@ -23,6 +29,7 @@ apply plugin:"com.energizedwork.webdriver-binaries"
 apply plugin:"com.energizedwork.idea-project-components"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
+apply plugin:com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
 repositories {
     mavenLocal()
@@ -85,3 +92,64 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+ext {
+    pgContainerName = "${System.getProperty('grails.env') ?: 'dev'}-demo-postgres"
+    dbName = "${System.getProperty('grails.env') ?: 'dev'}DemoDb"
+    dbPort = "${System.getProperty('grails.env')}" == 'test' ? 5433 : 5432
+}
+
+// Docker Postgres
+task pullPostgresImage(type: DockerPullImage) {
+    description = 'Pull PostgreSQL image'
+    repository = 'postgres'
+    tag = '9.6.6'
+}
+
+task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgresImage) {
+    description = 'Creates PostgreSQL container'
+    containerName = pgContainerName
+    imageId = 'postgres:9.6.6'
+    portBindings = ["${dbPort}:5432"]
+    env = [
+        'POSTGRES_PASSWORD=dbPassword',
+        "POSTGRES_DB=${dbName}",
+    ] as String[]
+
+    onError { e ->
+        if (e.class.simpleName == 'ConflictException') {
+            logger.lifecycle 'Container already exists'
+        } else {
+            throw e
+        }
+    }
+}
+
+task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
+    description = 'Starts Postgres container'
+    containerId = pgContainerName
+    onError { e ->
+        if (e.class.simpleName == 'NotModifiedException') {
+            logger.lifecycle 'Container already started'
+        } else {
+            throw e
+        }
+    }
+    onComplete {
+        logger.lifecycle "Postgres is listening on port ${dbPort}"
+    }
+}
+
+task stopPostgresContainer(type: DockerStopContainer) {
+    description = 'Stops Postgres container'
+    containerId = pgContainerName
+    onError { e ->
+        if (e.class.simpleName == 'NotModifiedException') {
+            logger.lifecycle 'Container already stopped'
+        } else {
+            throw e
+        }
+    }
+}
+
+bootRun.dependsOn startPostgresContainer
