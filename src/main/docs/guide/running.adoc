@@ -6,12 +6,11 @@ and then start the Grails App
 
 `./gradlew bootRun`
 
-
 `bootRun.dependsOn startPostgresContainer`
 
 If you connect to the database, you will see the expected database schema.
 
-image::dbthumb.png[Database created]
+image::db.png[Database created]
 
 == bootRun depends on PostgreSQL
 
