@@ -1,4 +1,4 @@
-If you don’t already have Docker installed, you’ll need to https://docs.docker.com/docker-for-mac/[download and install it].
+If you do not already have Docker installed, you’ll need to https://docs.docker.com/docker-for-mac/[download and install it].
 
 You may need to increase Docker’s available memory to 4GB or more.
 
@@ -6,7 +6,7 @@ image::docker.png[Docker Preferences]
 
 == Tip: Get Kitematic
 
-Kitematic is a nice desktop application for managing Docker containers.
+Kitematic is an excellent desktop application for managing Docker containers.
 The first time you click Open Kitematic, it will prompt you to download and install it.
 You can then use Kitematic to view the output of your containers, manage their settings, etc.
 

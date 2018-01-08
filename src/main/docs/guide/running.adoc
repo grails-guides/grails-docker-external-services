@@ -9,7 +9,7 @@ and then start the Grails App
 
 `bootRun.dependsOn startPostgresContainer`
 
-If you connect to the database you will see the expected database schema.
+If you connect to the database, you will see the expected database schema.
 
 image::dbthumb.png[Database created]
 
@@ -23,4 +23,4 @@ This will create the next dependency path:
 
 `bootRun -> startPostgresContainer -> createPostgresContainer -> pullPostgresImage`
 
-Such a path maybe of interest for a continuous integration environment.
+Such a path may be of interest for a continuous integration environment.
