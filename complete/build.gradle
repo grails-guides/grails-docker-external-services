@@ -30,6 +30,13 @@ apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
+//tag::ext[]
+ext {
+    pgContainerName = "${System.getProperty('grails.env') ?: 'dev'}-demo-postgres"
+    dbName = "${System.getProperty('grails.env') ?: 'dev'}DemoDb"
+    dbPort = "${System.getProperty('grails.env')}" == 'test' ? 5433 : 5432
+}
+//end::ext[]
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
@@ -91,12 +98,6 @@ tasks.withType(Test) {
 assets {
     minifyJs = true
     minifyCss = true
-}
-
-ext {
-    pgContainerName = "${System.getProperty('grails.env') ?: 'dev'}-demo-postgres"
-    dbName = "${System.getProperty('grails.env') ?: 'dev'}DemoDb"
-    dbPort = "${System.getProperty('grails.env')}" == 'test' ? 5433 : 5432
 }
 
 // Docker Postgres
