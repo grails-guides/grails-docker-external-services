@@ -143,7 +143,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 
     onError { e ->
         if (e.class.simpleName in ['BadRequestException', 'ConflictException']) {
-            logger.lifecycle 'Container already exists'
+            logger.warn 'Container already exists'
         } else {
             throw e
         }
@@ -158,13 +158,13 @@ task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgre
     containerId = pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
-            logger.lifecycle 'Container already started'
+            logger.warn 'Container already started'
         } else {
             throw e
         }
     }
     onComplete {
-        logger.lifecycle "Postgres is listening on port ${dbPort}"
+        logger.info "Postgres is listening on port ${createPostgresContainer.dbPort}"
     }
 }
 bootRun.dependsOn startPostgresContainer
@@ -177,7 +177,7 @@ task stopPostgresContainer(type: DockerStopContainer) {
     containerId = pgContainerName
     onError { e ->
         if (e.class.simpleName == 'NotModifiedException') {
-            logger.lifecycle 'Container already stopped'
+            logger.warn 'Container already stopped'
         } else {
             throw e
         }
