@@ -149,7 +149,7 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
 }
 //end::createPostgresContainer[]
 
-//end::startPostgresContainer[]
+//start::startPostgresContainer[]
 task startPostgresContainer(type: DockerStartContainer, dependsOn: createPostgresContainer) {
     group = 'docker'
     description = 'Starts Postgres container'
