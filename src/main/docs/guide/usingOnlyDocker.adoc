@@ -54,9 +54,9 @@ From now on, every time we want to start/stop the container, we only need to exe
 
 [source, bash]
 ----
-$ docker start postgres
+$ docker start demo-postgres
 
-$ docker stop postgres
+$ docker stop demo-postgres
 ----
 
 TIP: Keep in mind that you also need to change `application.yml` to use the new credentials defined in `setup.sh` file.
