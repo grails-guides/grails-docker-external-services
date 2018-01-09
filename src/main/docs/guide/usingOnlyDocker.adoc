@@ -61,3 +61,19 @@ $ docker stop postgres
 
 TIP: Keep in mind that you also need to change `application.yml` to use the new credentials defined in `setup.sh` file.
 
+Replace the database development environment configuration with:
+
+[source, yaml]
+.grails-app/conf/application.yml
+----
+environments:
+    development:
+        dataSource:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            driverClassName: org.postgresql.Driver
+            username: dev_user
+            password: dev_password
+            dbCreate: update
+            url: jdbc:postgresql://localhost:5432/dev_demo_db
+----
+
