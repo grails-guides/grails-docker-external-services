@@ -38,7 +38,7 @@ With those files created, let's build the docker image:
 
 [source, bash]
 ----
-$ docker build -t demo-postgres src/main/docker/
+$ docker build -t postgres-custom src/main/docker/
 ----
 
 == Start a container
@@ -47,7 +47,7 @@ To create and start a container for the first time based on the image we have ju
 
 [source, bash]
 ----
-$ docker run -d -p 5432:5432 --name postgres demo-postgres
+$ docker run -d -p 5432:5432 --name demo-postgres postgres-custom
 ----
 
 From now on, every time we want to start/stop the container, we only need to execute:
