@@ -12,5 +12,7 @@ writing:
   postgresql: Configure PostgreSQL
 running:
   title: Running the app
+usingOnlyDocker:
+  title: Using only Docker
 helpWithGrails:
   title: Help with Grails  
