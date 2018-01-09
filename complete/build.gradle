@@ -117,7 +117,7 @@ task pullPostgresImage(type: DockerPullImage) {
     group = 'docker' // <1>
     ext {
         imageName = 'postgres' // <2>
-        imageTag = '9.66'  // <3>
+        imageTag = '9.6.6'  // <3>
     }
     description = 'Pull PostgreSQL image'
     repository = imageName
@@ -130,13 +130,13 @@ task createPostgresContainer(type: DockerCreateContainer, dependsOn: pullPostgre
     group = 'docker'  // <1>
     ext {
         pgContainerName = "demo-postgres" // <4>
-        dbName = "demoDb" // <5>
+        dbName = "demo_db" // <5>
         dbPort = 5432 // <6>
-        dbPassword = 'dbPassword'  // <7>
+        dbPassword = 'dev_password'  // <7>
     }
     description = 'Creates PostgreSQL container'
     containerName = pgContainerName
-    imageId = "${pullPostgresImage.name}:${pullPostgresImage.tag}"
+    imageId = "${pullPostgresImage.imageName}:${pullPostgresImage.tag}"
     portBindings = ["${dbPort}:5432"]
     env = [
         "POSTGRES_PASSWORD=${dbPassword}",
